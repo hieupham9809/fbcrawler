@@ -16,12 +16,46 @@
 
 var FB = require('fb');
 FB.setAccessToken('EAABwzLixnjYBAA6cjFScWyT9Er2l0vGtwcbRttXcPu07UhgcFN9HZBPAPUTmXZAjZCvMrQMiPZAQOtqUrGlMB1cMuE9SpPAsU14nKQCz9IygvDeoJFMxT3ZBw34HqroAdqIFC9zNnbMZBLpy5LAVQgOekojbZBKpHirhCXolQdnvAZDZD')
+var data=[];
+function callapi(url){
+    console.log("hi")
+    FB.api(url,function(res){
+        if(!res || res.error) {
+            console.log(!res ? 'error occurred' : res.error);
+            return;
+           }
+        data=data.concat(res.data)
+        if (res.paging){
+            var nextUrl=res.paging.next.slice(32,res.paging.next.length)
+            console.log(nextUrl)
+            callapi(nextUrl)
+        }
+        else 
+        {
+            console.log(data)
+        }
+           
+})
+}
 
-FB.api('160839194080753/posts', function (res) {
+
+FB.api('160839194080753/posts?limit=250&fields=id,message,created_time,updated_time', function (res) {
+    console.log("main function")
   if(!res || res.error) {
    console.log(!res ? 'error occurred' : res.error);
    return;
   }
-  console.log(res);
-
+  data=data.concat(res.data);
+  if (res.paging){
+      FB.api(res.paging.next,function(res){
+        if(!res || res.error) {
+            console.log(!res ? 'error occurred' : res.error);
+            return;
+           }
+        data=data.concat(res.data)  
+      })
+    var nextUrl=res.paging.next.slice(32,res.paging.next.length)
+    console.log(nextUrl)
+    callapi(nextUrl);
+  }
 });
