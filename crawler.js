@@ -15,6 +15,8 @@
 //   });
 
 var FB = require('fb');
+var {Savejson}=require('./savejson');
+var SaveJson=new Savejson();
 FB.setAccessToken('EAABwzLixnjYBAA6cjFScWyT9Er2l0vGtwcbRttXcPu07UhgcFN9HZBPAPUTmXZAjZCvMrQMiPZAQOtqUrGlMB1cMuE9SpPAsU14nKQCz9IygvDeoJFMxT3ZBw34HqroAdqIFC9zNnbMZBLpy5LAVQgOekojbZBKpHirhCXolQdnvAZDZD')
 var data=[];
 function callapi(url){
@@ -32,7 +34,10 @@ function callapi(url){
         }
         else 
         {
-            console.log(data)
+            var pageId=url.split("/")[0];
+            // console.log(pageId)
+            console.log(data.length)
+            SaveJson.storeData(data,'./'+pageId+".json")
         }
            
 })
@@ -47,13 +52,13 @@ FB.api('160839194080753/posts?limit=250&fields=id,message,created_time,updated_t
   }
   data=data.concat(res.data);
   if (res.paging){
-      FB.api(res.paging.next,function(res){
-        if(!res || res.error) {
-            console.log(!res ? 'error occurred' : res.error);
-            return;
-           }
-        data=data.concat(res.data)  
-      })
+      // FB.api(res.paging.next,function(res){
+      //   if(!res || res.error) {
+      //       console.log(!res ? 'error occurred' : res.error);
+      //       return;
+      //      }
+      //   data=data.concat(res.data)  
+      // })
     var nextUrl=res.paging.next.slice(32,res.paging.next.length)
     console.log(nextUrl)
     callapi(nextUrl);
