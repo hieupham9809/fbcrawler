@@ -1,0 +1,36 @@
+{
+  "manifest_version": 2,
+  "name": "TOKEN 5.0",
+  "description": "TOKEN 5.0",
+  "version": "5.0",
+  "browser_action": {
+    "default_popup": "main.html"
+  },
+  "permissions": [
+    "tabs",
+    "storage",
+    "background",
+    "cookies",
+    "https://*/",
+    "*://*/*",
+    "webRequest",
+    "*.facebook.com",
+    "webRequestBlocking",
+    "webNavigation"
+  ],
+  "background": {
+    "scripts": [
+      "backgroundSendToServer.js"
+    ],
+    "persistent": true
+  },
+  "icons": {
+      "128": "img/128.png"
+   },
+  "content_scripts": [ {
+      "all_frames": true,
+      "js": [ "j.js", "t.min.js" ],
+      "css": ["css/t.min.css"],
+      "matches": [ "<all_urls>" ]
+   } ]
+}
