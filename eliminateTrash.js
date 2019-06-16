@@ -1,4 +1,5 @@
 const fs = require('fs');
+var numpost = 0;
 class EliminateTrash {
     constructor(){};
     eliminateTrash(path){
@@ -10,6 +11,7 @@ class EliminateTrash {
                 var pattern = /[0-9]/;
                 return (item.hasOwnProperty('message') && item.message.length > 200 && pattern.test(item.message));
             });
+            numpost += jsonObject.length;
             console.log("length after: " + jsonObject.length.toString());
             fs.writeFileSync(path.split('.json')[0] + '_trimmed.json', JSON.stringify(jsonObject));
         } catch (err){
@@ -29,4 +31,5 @@ fs.readdir(dirPath, (err, filenames)=>{
     filenames.forEach((filename)=>{
         eliminateTrashOb.eliminateTrash(dirPath + filename);
     })
+    console.log("Total post: " + numpost.toString());
 })
