@@ -21,7 +21,7 @@ class EliminateTrash {
 // module.exports = {EliminateTrash};
  var eliminateTrashOb = new EliminateTrash();
 // eliminateTrashOb.eliminateTrash('./379380485898721.json'); 
-const dirPath = './data/';
+const dirPath = '../data_raw/';
 fs.readdir(dirPath, (err, filenames)=>{
     if (err){
         return;
