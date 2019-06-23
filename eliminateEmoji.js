@@ -12,11 +12,14 @@ class EliminateEmoji {
             const hashtag = /(#([^ ])*)/g;
             const breakline = /(\n(\n| )+)/g;
             const specialBreakline = /([-—^*_+ ]([-—^*_+ ])+)/g;
-            const specialChar = /((\:\)+)|(\:\D+)|(\:\(+)|(\:\'\(+)|(\:P+)|(O\:\))|(3\:\))|(o\.O+)|(\;\)+)|(\:\/+)|(\>\:O)|(\:O+)|(\-\_+\-)|(\:\*)|(\^\_+\^)|(8\-\)+)|(8\|+)|(\>\:\(+)|(\:v+)|(\:3+)|(\(y\))|(\<\(\"\))|(\(\^\^\^\))|(\=\=+)|(\:\|\])|(\:poop\:)|(\:putnam\:)|(\<3+)|(●)|(☐)|(→)|(▶))/g;
+            const dot = /(\.\.\.(\.)+)/g;
+            //const specialChar = /((\:\)+)|(\:\D+)|(\:\(+)|(\:\'\(+)|(\:P+)|(O\:\))|(3\:\))|(o\.O+)|(\;\)+)|(\:\/+)|(\>\:O)|(\:O+)|(\-\_+\-)|(\:\*)|(\^\_+\^)|(8\-\)+)|(8\|+)|(\>\:\(+)|(\:v+)|(\:3+)|(\(y\))|(\<\(\"\))|(\(\^\^\^\))|(\=\=+)|(\:\|\])|(\:poop\:)|(\:putnam\:)|(\<3+)|(●)|(☐)|(→)|(▶))/g;
+            const specialChar = /((:\)+)|(:D+)|(:\(+)|(:\'\(+)|(:P+)|(O:\))|(3:\))|(o.O+)|(;\)+)|(:\/ )|(>:O)|(:O+)|(-_+-)|(:\*)|(^_+^)|(8-\)+)|(8\|+)|(>:\(+)|(:v+)|(:3+)|(\(y\))|(<\(\"\))|(\(^^^\))|(==+)|(:\|\])|(:poop:)|(:putnam:)|(<3+)|(●)|(☐)|(→)|(▶))/g;
 
             for (i in jsonObject){
                 var message = jsonObject[i].message;
                 message = message.replace(pattern, '');
+                message = message.replace(dot, '');
                 message = message.replace(hashtag, '');
                 message = message.replace(specialBreakline, ' ');
                 message = message.replace(specialChar, '');
@@ -35,13 +38,13 @@ class EliminateEmoji {
 
 var eliminateEmojiOb = new EliminateEmoji();
 eliminateEmojiOb.eliminateEmoji('./379380485898721_trimmed.json');
-// const dirPath = '../data/';
-// fs.readdir(dirPath, (err, filenames)=>{
-//     if (err){
-//         return;
-//     }
-//     filenames.forEach((filename)=>{
-//         eliminateEmojiOb.eliminateEmoji(dirPath + filename);
-//     })
+const dirPath = '../data/';
+fs.readdir(dirPath, (err, filenames)=>{
+    if (err){
+        return;
+    }
+    filenames.forEach((filename)=>{
+        eliminateEmojiOb.eliminateEmoji(dirPath + filename);
+    })
     
-// })
+})
