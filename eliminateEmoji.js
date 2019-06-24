@@ -27,7 +27,7 @@ class EliminateEmoji {
 
 var eliminateEmojiOb = new EliminateEmoji();
 //eliminateEmojiOb.eliminateEmoji('./379380485898721_trimmed.json');
-const dirPath = '../data/';
+const dirPath = '../data_eliminate/';
 fs.readdir(dirPath, (err, filenames)=>{
     if (err){
         return;
